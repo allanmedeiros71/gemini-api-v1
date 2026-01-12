@@ -8,7 +8,9 @@ load_dotenv()
 API_KEY = os.getenv("GEMINI_API_KEY")
 if not API_KEY:
     raise RuntimeError("GEMINI_API_KEY não definida. Defina em .env ou nas variáveis de ambiente.")
-
+MODEL = os.getenv("GEMINI_MODEL")
+if not MODEL:
+    raise RuntimeError("GEMINI_MODEL não definido. Defina em .env ou nas variáveis de ambiente.")
 
 # Instancia o cliente (novo padrão)
 client = genai.Client(api_key=API_KEY)
@@ -18,7 +20,7 @@ def consultar_gemini(prompt):
     try:
         # A sintaxe de chamada mudou: client.models.generate_content
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model=MODEL,
             contents=prompt
         )
         return response.text
